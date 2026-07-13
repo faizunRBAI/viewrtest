@@ -75,6 +75,8 @@
       ansible.builtin.stat:
         path: "{{ playbook_dir }}/../package-lock.json"
       register: lockfile
+      delegate_to: localhost
+      become: false
 
     - name: Sync package-lock.json
       ansible.builtin.copy:
@@ -97,6 +99,8 @@
       ansible.builtin.stat:
         path: "{{ playbook_dir }}/../public"
       register: public_dir
+      delegate_to: localhost
+      become: false
 
     - name: Copy public directory if present
       ansible.builtin.copy:
@@ -111,6 +115,8 @@
       ansible.builtin.stat:
         path: "{{ playbook_dir }}/../.env"
       register: env_file
+      delegate_to: localhost
+      become: false
 
     - name: Copy .env file if present
       ansible.builtin.copy:
