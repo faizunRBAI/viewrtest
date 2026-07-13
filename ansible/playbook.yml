@@ -47,12 +47,6 @@
         state: present
         update_cache: true
 
-    - name: Install PM2 globally
-      community.general.npm:
-        name: pm2
-        global: true
-        state: present
-
     - name: Create application directory
       ansible.builtin.file:
         path: "{{ app_dir }}"
@@ -187,8 +181,7 @@
           Type=simple
           User=ubuntu
           WorkingDirectory={{ app_dir }}
-          ExecStart=/usr/bin/pm2 start npm --name app -- start --update-env --no-daemon
-          ExecStop=/usr/bin/pm2 stop app
+          ExecStart=/usr/bin/node {{ app_dir }}/server.js
           Restart=on-failure
           RestartSec=10
           Environment=NODE_ENV=production
